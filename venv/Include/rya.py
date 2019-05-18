@@ -30,7 +30,36 @@ def euklidesz(r1, r2):
         x1 = tempx
         y2 = y2*q + y1
         y1 = tempy
-    return r1, q, x1, y1
+    return r1#, q, x1, y1
+
+def is_prime(num):
+    if num == 2:
+        return True
+    if num < 2 or num % 2 == 0:
+        return False
+    for a in range(2, 120):
+        if (euklidesz(a, num) == 1):
+            s = 0
+            numDS = num-1
+            while(numDS%2 == 0):
+                numDS = numDS/2
+                s = s+1
+            d = numDS
+            print("ennyi a d",d)
+            for r in range(s):
+                if(gyorshatvanyozas(a, d, num) == num-1):
+                    print("teljesült")
+                    return True
+                else:
+                    d = d * (2 ** r)
+        else:
+            return False
+
+
 
 print(gyorshatvanyozas(23, 209, 211))
 print(euklidesz(141, 17))
+message = 9
+print(gyorshatvanyozas(9, 5, 39))
+print(gyorshatvanyozas(7, 49*(2**2), 197))
+print(is_prime(21))
