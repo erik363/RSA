@@ -1,4 +1,7 @@
 from random import randrange, getrandbits, randint
+import sys
+sys.setrecursionlimit(10**6)
+
 
 def gyorshatvanyozas(a, n, m):
     actual = a%m
@@ -38,10 +41,9 @@ def euklideszEx(r1, r2):
         y2 = y2*q + y1
         y1 = tempy
         counter += 1
-    print(counter, y1)
     X = ((-1)**counter) * x1
     Y = ((-1)**(counter+1)) * y1
-    return Y#, q, x1, y1
+    return r1, X, Y
 
 def is_prime(num):
     if num == 2:
@@ -83,10 +85,15 @@ def found_e(fn, n):
         else: e = e + 2
     return e
 
-#print(gyorshatvanyozas(23, 209, 211))
-#print(euklidesz(141, 17))
-#print(gyorshatvanyozas(9, 5, 39))
-#print(gyorshatvanyozas(7, 49*(2**2), 197))
+def kinai(p, q, d, message):
+    M = p*q
+    c1=gyorshatvanyozas(message,d%(p-1),p)
+    c2=gyorshatvanyozas(message,d%(q-1),q)
+    b,x0,y0=euklideszEx(p,q)
+    y1,y2=x0,y0
+    print((y1 * p) % q)
+    print((y2 * q) % p)
+    return (c1*y1*p+c2*y2*q)%M
 
 p = generate_prime_candidate(1024)
 print("A generált p érték:\n", p)
@@ -99,12 +106,11 @@ print("Az n értéke:\n", n)
 print("A fn értéke:\n", fn)
 e = found_e(fn, n)
 print("Private\n", e, n)
-d = euklideszEx(e, fn)
+d = euklideszEx(fn,e)[2]
+print("A d értéke:", d)
 titkos = gyorshatvanyozas(message, e, n)
-print("A kódolt üzenet: ", titkos)
-print("A d értéke: ", d)
-
-print(euklideszEx(141,17))
-
-
+print("Az üzenet:", message)
+print("A kódolt üzenet:", titkos)
+visszafejt=kinai(p,q,d,titkos)
+print("Az üzenet visszafejtve:", visszafejt)
 
