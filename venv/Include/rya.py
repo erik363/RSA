@@ -39,7 +39,7 @@ def euklideszEx(r1, r2):
         y1 = tempy
     X = ((-1)**counter-1) * x1
     Y = ((-1)**counter) * y1
-    return r1, x1, y1#, q, x1, y1
+    return Y#, q, x1, y1
 
 def is_prime(num):
     if num == 2:
@@ -97,8 +97,11 @@ print("Az n értéke:\n", n)
 print("A fn értéke:\n", fn)
 e = found_e(fn, n)
 print("Private\n", e, n)
-
+d = euklideszEx(e, n)
 titkos = gyorshatvanyozas(message, e, n)
 print("A kódolt üzenet: ", titkos)
+print("A d értéke: ", d)
+print("dekódolt", titkos**d % n )
+
 
 
