@@ -91,15 +91,13 @@ def kinai(p, q, d, message):
     c2=gyorshatvanyozas(message,d%(q-1),q)
     b,x0,y0=euklideszEx(p,q)
     y1,y2=x0,y0
-    print((y1 * p) % q)
-    print((y2 * q) % p)
     return (c1*y1*p+c2*y2*q)%M
 
 p = generate_prime_candidate(1024)
 print("A generált p érték:\n", p)
 q = generate_prime_candidate(1024)
 print("A generált q érték:\n", q)
-message = 9
+message = int(input("Az üzenet: "))
 n = p*q
 fn = (p-1)*(q-1)
 print("Az n értéke:\n", n)
