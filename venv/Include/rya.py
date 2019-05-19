@@ -1,3 +1,5 @@
+from random import randrange, getrandbits
+
 def gyorshatvanyozas(a, n, m):
     actual = a%m
     mod = 1
@@ -36,30 +38,40 @@ def is_prime(num):
     if num == 2:
         return True
     if num < 2 or num % 2 == 0:
+
         return False
-    for a in range(2, 120):
-        if (euklidesz(a, num) == 1):
-            s = 0
-            numDS = num-1
-            while(numDS%2 == 0):
-                numDS = numDS/2
-                s = s+1
-            d = numDS
-            print("ennyi a d",d)
-            for r in range(s):
-                if(gyorshatvanyozas(a, d, num) == num-1):
-                    print("teljesült")
-                    return True
-                else:
-                    d = d * (2 ** r)
-        else:
-            return False
+    s = 0
+    n = num - 1
+    while n & 1 == 0:
+        s += 1
+        n //= 2
+    count = 120
+    for i in range(count):
+        a = 2
+        x = gyorshatvanyozas(a, n, num)
+        a += 1
+        if x != 1 and x != num-1:
+            j = 1
+            while j < s and x != num-1:
+                x = gyorshatvanyozas(x, 2, num)
+                if x== 1:
+                    return False
+                j += 1
+            if x != num-1:
+                return False
+    return True
 
-
+def generate_prime_candidate(length):
+    p = getrandbits(length)
+    p |= (1 << length - 1) | 1
+    if(is_prime(p)):
+        return p
+    return generate_prime_candidate(length)
 
 print(gyorshatvanyozas(23, 209, 211))
 print(euklidesz(141, 17))
 message = 9
 print(gyorshatvanyozas(9, 5, 39))
 print(gyorshatvanyozas(7, 49*(2**2), 197))
-print(is_prime(21))
+print(is_prime(generate_prime_candidate(1024)))
+print(generate_prime_candidate(1024))
