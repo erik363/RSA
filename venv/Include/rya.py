@@ -11,13 +11,6 @@ def gyorshatvanyozas(a, n, m):
     mod *= actual
     return mod%m
 
-def gcd(a, b):
-    x0, x1, y0, y1 = 0, 1, 1, 0
-    while a!= 0:
-        q, b, a - b // a, a, b%a
-        y1, y1 = y1, y0  -q * y1
-        x0, x1 = x1, x0 - q * x1
-
 def euklidesz(r1, r2):
     if r2 == 0: return r1
     return euklidesz(r2, r1%r2)
