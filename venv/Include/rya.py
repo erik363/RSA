@@ -1,4 +1,4 @@
-from random import randrange, getrandbits
+from random import randrange, getrandbits, randint
 
 def gyorshatvanyozas(a, n, m):
     actual = a%m
@@ -11,7 +11,18 @@ def gyorshatvanyozas(a, n, m):
     mod *= actual
     return mod%m
 
+def gcd(a, b):
+    x0, x1, y0, y1 = 0, 1, 1, 0
+    while a!= 0:
+        q, b, a - b // a, a, b%a
+        y1, y1 = y1, y0  -q * y1
+        x0, x1 = x1, x0 - q * x1
+
 def euklidesz(r1, r2):
+    if r2 == 0: return r1
+    return euklidesz(r2, r1%r2)
+
+def euklideszEx(r1, r2):
     q = r1//r2
     x1 = 1
     x2 = 0
@@ -20,6 +31,7 @@ def euklidesz(r1, r2):
     temp = 0
     tempx = 0
     tempy = 0
+    counter = 0
     while(r2 != 0):
         temp = r2
         q = r1 // r2
@@ -32,13 +44,14 @@ def euklidesz(r1, r2):
         x1 = tempx
         y2 = y2*q + y1
         y1 = tempy
-    return r1#, q, x1, y1
+    X = ((-1)**counter-1) * x1
+    Y = ((-1)**counter) * y1
+    return r1, x1, y1#, q, x1, y1
 
 def is_prime(num):
     if num == 2:
         return True
     if num < 2 or num % 2 == 0:
-
         return False
     s = 0
     n = num - 1
@@ -68,10 +81,31 @@ def generate_prime_candidate(length):
         return p
     return generate_prime_candidate(length)
 
-print(gyorshatvanyozas(23, 209, 211))
-print(euklidesz(141, 17))
+def found_e(fn, n):
+    e = 3
+    while True:
+        if euklidesz(fn, e) == 1: break
+        else: e = e + 2
+    return e
+
+#print(gyorshatvanyozas(23, 209, 211))
+#print(euklidesz(141, 17))
+#print(gyorshatvanyozas(9, 5, 39))
+#print(gyorshatvanyozas(7, 49*(2**2), 197))
+
+p = generate_prime_candidate(1024)
+print("A generált p érték:\n", p)
+q = generate_prime_candidate(1024)
+print("A generált q érték:\n", q)
 message = 9
-print(gyorshatvanyozas(9, 5, 39))
-print(gyorshatvanyozas(7, 49*(2**2), 197))
-print(is_prime(generate_prime_candidate(1024)))
-print(generate_prime_candidate(1024))
+n = p*q
+fn = (p-1)*(q-1)
+print("Az n értéke:\n", n)
+print("A fn értéke:\n", fn)
+e = found_e(fn, n)
+print("Private\n", e, n)
+
+titkos = gyorshatvanyozas(message, e, n)
+print("A kódolt üzenet: ", titkos)
+
+
